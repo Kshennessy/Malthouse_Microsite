@@ -1,15 +1,192 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<title>1886 Malthouse</title>
-<link rel='stylesheet' href='css/style.css'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1886 Malt House — New York's Largest Malthouse · Turnkey · Fulton, NY</title>
+  <meta name="description" content="The largest malthouse in New York State. 40,000 sq ft turnkey food-processing facility, fully equipped and available for lease in Fulton, NY.">
+  <link rel="preload" as="image" href="assets/hero-poster.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">{"imports":{"three":"https://esm.sh/three@0.163.0"}}</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1.5/dist/hls.min.js"></script>
 </head>
 <body>
 
-<h1>Coming Soon</h1>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="nav-name">1886 Malt House</span>
+        <span class="nav-loc">Fulton, NY</span>
+      </div>
+      <a href="#contact" class="nav-cta">Inquire</a>
+    </div>
+  </nav>
 
-<script src='js/main.js'></script>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-media">
+      <video class="hero-video" id="hero-video"
+             autoplay muted playsinline
+             disablepictureinpicture disableremoteplayback
+             preload="auto" poster="assets/hero-poster.jpg"
+             aria-label="1886 Malt House aerial footage">
+        <source src="assets/hero-720.mp4"  type="video/mp4" media="(max-width: 768px)">
+        <source src="assets/hero-1080.mp4" type="video/mp4">
+        <img src="assets/hero-poster.jpg" alt="1886 Malt House, Fulton NY">
+      </video>
+      <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-body">
+      <div class="hero-body-inner">
+        <h1 class="hero-headline">New York State's largest malthouse.</h1>
+        <p class="hero-kicker">Available for lease in Fulton, NY</p>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <span class="hero-meta-primary">$12.5M buildout</span>
+      <span class="hero-meta-secondary">Turnkey availability</span>
+    </div>
+    <a href="#facility" class="hero-down" aria-label="Scroll down">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </a>
+  </section>
+
+  <!-- HERO STRIP (scrolling divider banner) -->
+  <section id="hero-strip" class="hero-strip" aria-hidden="true">
+    <div class="strip-track">
+      <div class="strip-cell"><img src="assets/AF2P5868.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_14.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/AF2P5906.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_15.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/AO7U2682.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_16.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/AF2P5901.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/DJI_0080.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_11.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_13.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_17.jpg" alt="" loading="lazy"></div>
+      <div class="strip-cell"><img src="assets/large-155691.0_194.jpg" alt="" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- FACILITY -->
+  <section id="facility">
+    <div class="facility-pitch">
+      <h2>Skip the buildout. <em>Start producing on day one.</em></h2>
+      <div class="pitch-body">
+        <p>A $12.5M food-processing plant, purpose-built in 2017 and fully equipped. 40,000 square feet of refurbished industrial shell with all building infrastructure installed new — electrical, drainage, lighting, HVAC, and fire systems. Two years of design and construction, already done.</p>
+        <p class="pitch-credit">Designed and built by <a href="https://www.cscos.com" target="_blank" rel="noopener">C&amp;S Companies</a> for Sunoco in 2017. Built as a malthouse — capable of a lot more.</p>
+      </div>
+    </div>
+
+    <div class="facility-explorer">
+      <div class="explorer-map" id="explorer-map">
+        <img src="assets/Malthouse.png" alt="1886 Malt House cutaway" class="explorer-img">
+        <div class="explorer-nodes" id="explorer-nodes"></div>
+      </div>
+      <div class="viewer-column">
+        <div class="inline-viewer" id="inline-viewer">
+          <canvas id="viewer-canvas"></canvas>
+          <div class="viewer-badge">
+            <span class="badge-name" id="badge-scene-name">View 1</span>
+            <span class="badge-loc">Fulton, NY</span>
+          </div>
+          <button id="viewer-expand" class="viewer-expand" aria-label="Expand viewer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+          </button>
+          <button id="viewer-collapse" class="viewer-collapse" aria-label="Exit fullscreen" hidden>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+          <div id="hint-bar" class="viewer-hint">Drag to look around</div>
+          <div id="tour-placeholder" class="viewer-loading">
+            <div class="placeholder-inner">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <p>Loading panorama…</p>
+            </div>
+          </div>
+        </div>
+        <p class="viewer-caption" id="viewer-caption" hidden></p>
+      </div>
+    </div>
+
+    <aside class="equipment-roster" aria-label="Installed equipment">
+      <p class="equipment-eyebrow">Installed equipment · 2017</p>
+      <ol class="equipment-numbered">
+        <li>4 exterior grain receiving silos</li>
+        <li>2 clipper screeners</li>
+        <li>2 tempered water tanks</li>
+        <li>2 stainless steel steeping tanks</li>
+        <li>6 German-imported 10-ton Kaspar Schulz rotating kilns</li>
+        <li>6 final product storage tanks</li>
+        <li>Premier Tech fully automated bagging system — bagger, sewing machine, scale, metal detection</li>
+        <li>Robot arm bag palletizer</li>
+        <li>2 pallet shrink wrap machines</li>
+        <li>Climate-controlled storage warehouse</li>
+        <li>2 loading dock doors</li>
+        <li>Clean and dirty lab, fully equipped</li>
+        <li>2 separate offices, conference room, restroom</li>
+      </ol>
+    </aside>
+  </section>
+
+  <!-- TOUR VIDEO -->
+  <section id="tour">
+    <div class="container">
+      <div class="video-frame" id="video-frame">
+        <video id="tour-video" preload="none" playsinline poster="assets/AF2P5868.jpg"
+               data-hls="https://customer-pnid299zesrw0u8y.cloudflarestream.com/abac16864f569dd12570fc8837367c75/manifest/video.m3u8">
+          Your browser doesn't support video playback.
+        </video>
+        <button class="video-play" id="video-play" type="button" aria-label="Play facility tour">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-inner">
+          <h2>Get in touch.</h2>
+          <p class="contact-sub">Qualified operators and investors welcome. Reach out for a walkthrough.</p>
+          <div class="contact-details">
+            <a href="mailto:owner@example.com" class="contact-line">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
+              <span>owner@example.com</span>
+            </a>
+            <a href="tel:+1XXXXXXXXXX" class="contact-line">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>(XXX) XXX-XXXX</span>
+            </a>
+          </div>
+        </div>
+        <div class="contact-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23214.4!2d-76.4177!3d43.3223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d9e3b3b3b3b3b3%3A0x0!2sFulton%2C+NY!5e0!3m2!1sen!2sus!4v1"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            title="Oswego Rail and Energy Park">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <span>1886 Malt House · Oswego Rail &amp; Energy Park · Fulton, NY</span>
+      <span>Site by Quadcopter Studios</span>
+    </div>
+  </footer>
+
+  <!-- MOBILE STICKY CTA -->
+  <div id="sticky-cta">
+    <a href="#contact" class="btn-primary btn-full">Inquire</a>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

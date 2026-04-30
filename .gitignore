@@ -1,0 +1,38 @@
+# Source materials — not deployed, kept locally only
+assets/_originals/
+
+# Video editing project files (Premiere/etc) — too large for git
+Video/
+
+# Dev tooling — not part of the site
+tools/
+
+# Photoshop / video source files
+*.psd
+*.aep
+*.prproj
+*.prproj.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (in case anyone adds tooling later)
+node_modules/
+package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local environment
+.env
+.env.local
