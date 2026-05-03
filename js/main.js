@@ -132,15 +132,26 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-// ── Sticky CTA: hide when contact section is visible ─────────────
+// ── Sticky CTA: hide while hero is in view, hide while contact is in view ──
 const stickyCta  = document.getElementById('sticky-cta');
+const heroSec    = document.getElementById('hero');
 const contactSec = document.getElementById('contact');
-if (stickyCta && contactSec) {
-  const obs = new IntersectionObserver(
-    ([entry]) => stickyCta.classList.toggle('hidden', entry.isIntersecting),
+if (stickyCta && heroSec && contactSec) {
+  let heroVisible = true;     // page loads at hero
+  let contactVisible = false;
+  const update = () => {
+    stickyCta.classList.toggle('hidden', heroVisible || contactVisible);
+  };
+
+  new IntersectionObserver(
+    ([entry]) => { heroVisible = entry.intersectionRatio >= 0.3; update(); },
+    { threshold: [0, 0.3, 0.6, 1] }
+  ).observe(heroSec);
+
+  new IntersectionObserver(
+    ([entry]) => { contactVisible = entry.isIntersecting; update(); },
     { threshold: 0.08 }
-  );
-  obs.observe(contactSec);
+  ).observe(contactSec);
 }
 
 // ── Hero strip: duplicate cells for seamless marquee ──
@@ -162,6 +173,15 @@ if (heroVideo) {
   });
   heroVideo.addEventListener('ended', () => {
     heroVideo.classList.add('is-ended');
+    // Auto-scroll to facility once the video finishes — only if user is still at
+    // the hero and hasn't opted out of motion.
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion || window.scrollY > 100) return;
+    setTimeout(() => {
+      if (window.scrollY > 100) return; // re-check in case they scrolled during the pause
+      const facility = document.getElementById('facility');
+      if (facility) facility.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 1000);
   });
 }
 
